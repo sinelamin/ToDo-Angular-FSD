@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { TuiRootModule } from "@taiga-ui/core";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, TuiRootModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
