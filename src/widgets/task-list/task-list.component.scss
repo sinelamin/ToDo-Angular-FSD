@@ -1,0 +1,76 @@
+.addTask {
+  margin: 10px;
+}
+
+.task-list {
+  width: 100%;
+
+  .task-number {
+    width: 30px;
+  }
+
+  .task-name {
+    overflow: auto;
+    max-width: 30vw;
+    cursor: pointer;
+  }
+
+  .task-name.completed {
+    text-decoration: line-through;
+  }
+
+  .task-id,
+  .task-status {
+    width: 80px;
+  }
+
+  .task-actions {
+    text-align: center;
+    width: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .addTask {
+      // font-size: 12px;
+      // padding: 5px 10px;
+    }
+  }
+
+  @media (max-width: 500px) {
+
+    .task-number,
+    .task-id,
+    .task-name,
+    .task-status {
+      font-size: 12px;
+    }
+
+    .task-name::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  @media (max-width: 381px) {
+
+    .task-number,
+    .task-id,
+    .task-name,
+    .task-status {
+      font-size: 10px;
+    }
+
+    .task-id {
+      display: none;
+    }
+
+    .task-status {
+      width: 30px;
+      font-size: 0;
+    }
+
+    .task-status>.completed::before,
+    .task-status>.not-completed::before {
+      margin: 0 auto;
+    }
+  }
+}
