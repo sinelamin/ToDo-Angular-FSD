@@ -1,0 +1,76 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
+th {
+    background: var(--tui-base-05);
+}
+
+td,
+th {
+    white-space: nowrap;
+    border-color: transparent;
+    border-right-color: var(--tui-base-04);
+
+    &:last-child {
+        border-right-color: transparent;
+    }
+}
+
+tbody {
+    border-color: transparent;
+}
+
+tr:nth-child(odd) td {
+    background: var(--tui-base-01);
+}
+
+tr:nth-child(even) td {
+    background: var(--tui-base-03);
+}
+
+.task-status>.completed,
+.task-status>.not-completed {
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+
+    &:before {
+        content: '';
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 100%;
+        margin-right: 0.5rem;
+        background: var(--tui-base-04);
+    }
+}
+
+.task-status>.completed:before {
+    background: var(--tui-success-fill);
+}
+
+.remove {
+    .transition(opacity);
+    opacity: 0;
+
+    tr:hover &,
+    tr:focus-within & {
+        opacity: 1;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .addTask {
+        font-size: 10px;
+        // padding: 5px 10px;
+    }
+}
+
+@media (max-width: 500px) {
+    .remove {
+        opacity: 1;
+    }
+}
+
+.remove tui-svg {
+    color: var(--tui-positive);
+}

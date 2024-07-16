@@ -1,0 +1,110 @@
+<button
+        appearance="accent"
+        shape="square"
+        size="m"
+        icon="tuiIconPlus"
+        title="add Task"
+        tuiIconButton
+        type="button"
+        class="addTask"
+        (click)="openForm()"
+    >
+</button>
+
+<table class="task-list"
+    tuiTable
+    [columns]="columns"
+>
+    <thead>
+        <tr tuiThGroup>
+            <th
+                *tuiHead="'number'"
+                tuiTh
+                [sorter]="null"
+            >
+                #
+            </th>
+            <th
+                *tuiHead="'task'"
+                tuiTh
+            >
+                Task
+            </th>
+            <th
+            class="task-id"
+            *tuiHead="'id'"
+            tuiTh
+        >
+            id
+        </th>
+            <th
+                class="task-status"
+                *tuiHead="'status'"
+                tuiTh
+            >
+                Status
+            </th>
+            <th
+                *tuiHead="'actions'"
+                tuiTh
+                [sorter]="null"
+            ></th>
+        </tr>
+    </thead>
+    <tbody
+        *tuiLet="tasks | tuiTableSort as tasks"
+        tuiTbody
+        [data]="tasks"
+    >
+    @for (item of tasks; track $index) {
+        <tr
+            tuiTr
+        >
+            <td class="task-number"
+                *tuiCell="'number'"
+                tuiTd
+            >
+                {{ $index + 1 }}
+            </td>
+            <td class="task-name"
+            [ngClass]="{completed: item.status}"
+                *tuiCell="'task'"
+                tuiTd
+            >
+                {{ item.task }}
+            </td>
+            <td class="task-id"
+                *tuiCell="'id'"
+                tuiTd
+            >
+                {{ item.id }}
+            </td>
+            <td class="task-status"
+                *tuiCell="'status'"
+                tuiTd
+            >   
+            <div [ngClass]="item.status ? 'completed' : 'not-completed'">
+                {{item.status ? "completed" : "not-completed"}}
+            </div>
+            </td>
+            <td class="task-actions"
+                *tuiCell="'actions'"
+                tuiTd
+            >
+                <button
+                    appearance="flat"
+                    shape="rounded"
+                    size="s"
+                    title="Remove"
+                    tuiIconButton
+                    type="button"
+                    class="remove"
+                    (click)="deleteTask()"
+                >
+                <tui-svg src="tuiIconTrash"></tui-svg>
+            </button>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
