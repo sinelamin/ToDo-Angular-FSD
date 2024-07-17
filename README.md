@@ -12,5 +12,6 @@ This is a ToDo project developed as a pet project to practice working with Angul
 - Practice with RxJS
 
 
-![image](https://github.com/user-attachments/assets/46e906a2-f748-42a1-bfa5-b4708e974a2e)
-![image](https://github.com/user-attachments/assets/62f32ba7-e0a1-4183-a1df-afab43a6216e)
+![image](https://github.com/user-attachments/assets/4bb8f0d6-191c-4a73-8a59-41e4fb182265)
+![image](https://github.com/user-attachments/assets/7877fcfe-4fac-4f11-8404-33032c95dc9e)
+
