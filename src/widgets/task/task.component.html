@@ -1,7 +1,7 @@
 <div [ngClass]="{active: isFormOpen}" class="overlay"></div>
 
 <div class="tui-container">
-    <form class="task-form" [formGroup]="taskForm">
+    <form [ngClass]="{active: isFormOpen}" class="task-form" [formGroup]="taskForm">
         <div class="tui-row tui-row_sme">
             <div class="tui-col_12">
                 <h3 class="tui-form__header tui-form__header_margin-top_none">

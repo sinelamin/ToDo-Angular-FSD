@@ -6,6 +6,9 @@ import { TuiButtonModule, TuiRootModule, TuiSvgModule } from '@taiga-ui/core';
 import { NgClass } from '@angular/common';
 
 import { TaskInterface } from '../../entities/taskInterface';
+import { TasksService } from '../../features';
+import { FormStateService } from '../../features';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-task-list',
@@ -24,47 +27,59 @@ import { TaskInterface } from '../../entities/taskInterface';
 })
 export class TaskListComponent implements OnInit {
 
-  
-  // tasks: TaskInterface[] = [];
+  constructor(
+    private TasksService: TasksService,
+    private FormStateService: FormStateService
+  ) { }
 
-  tasks: TaskInterface[] = [
-    {
-      task: "Сделать домашнее задание",
-      description: "Завершить раздел по типам данных",
-      status: false,
-      id: 1
-    },
-    {
-      task: "Купить продукты",
-      description: "Купить молоко, хлеб и яйца",
-      status: true,
-      id: 2
-    },
-    {
-      task: "Прочитать книгу",
-      description: "Закончить читать 'Войну и мир'",
-      status: false,
-      id: 3
-    },
-    {
-      task: "Убрать в квартире",
-      description: "Сделать генеральную уборку",
-      status: true,
-      id: 4
-    }
-  ];
-  
+
+  tasks: TaskInterface[] = [];
+
+  // tasks: TaskInterface[] = [
+  //   {
+  //     task: "Сделать домашнее задание",
+  //     description: "Завершить раздел по типам данных",
+  //     status: false,
+  //     id: 1
+  //   },
+  //   {
+  //     task: "Купить продукты",
+  //     description: "Купить молоко, хлеб и яйца",
+  //     status: true,
+  //     id: 2
+  //   },
+  //   {
+  //     task: "Прочитать книгу",
+  //     description: "Закончить читать 'Войну и мир'",
+  //     status: false,
+  //     id: 3
+  //   },
+  //   {
+  //     task: "Убрать в квартире",
+  //     description: "Сделать генеральную уборку",
+  //     status: true,
+  //     id: 4
+  //   }
+  // ];
+
 
   readonly columns = ['number', 'task', 'id', 'status', 'actions'];
 
   ngOnInit(): void {
-    
+    this.TasksService.tasks$.subscribe((tasks => {
+      this.tasks = tasks;
+    }));
+    this.TasksService.getTasks().subscribe();
   }
 
   openForm() {
+    this.FormStateService.openForm();
   }
 
-  deleteTask() {
-  }
+  deleteTask(id: number) {
+    this.TasksService.deleteTask(id).pipe(
+      switchMap(() => this.TasksService.getTasks())
+    ).subscribe();
+}
 
 }

@@ -16,6 +16,14 @@ import {
   TuiHintModule,
   TuiButtonModule
 } from '@taiga-ui/core';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs';
+
+import { TaskInterface } from '../../entities/taskInterface';
+import { Task } from '../../entities/taskModel';
+import { TasksService } from '../../features';
+import { FormStateService } from '../../features';
+
 
 
 @Component({
@@ -38,7 +46,13 @@ import {
 export class TaskComponent implements OnInit, OnDestroy {
 
   isFormOpen: boolean = false;
-  // isFormOpen: boolean = true;
+  private subscription!: Subscription;
+
+  constructor(
+    private TasksService: TasksService,
+    private FormStateService: FormStateService
+  ) {
+  }
 
   taskForm = new FormGroup({
     taskName: new FormControl('', Validators.required),
@@ -46,22 +60,38 @@ export class TaskComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    
+    this.subscription = this.FormStateService.formState$.subscribe(state => {
+      this.isFormOpen = state;
+    })
   }
 
   ngOnDestroy(): void {
-    
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   closeForm(): void {
+    this.FormStateService.closeForm();
   }
 
   addTask() {
     if (this.taskForm.valid) {
+      const taskName = this.taskForm.get('taskName')!.value!;
+      const taskDescr = this.taskForm.get('taskDescr')!.value!;
+      const newTask: TaskInterface = new Task(taskName, taskDescr);
+
+      this.TasksService.addTask(newTask).pipe(
+        switchMap(() => this.TasksService.getTasks())
+      ).subscribe();
+
+      this.cancel();
     }
   }
 
   cancel() {
+    this.taskForm.reset();
+    this.closeForm()
   }
 
 }
